@@ -23,7 +23,7 @@ namespace Assembler
             var dialog = new OpenFileDialog {Filter = "assembly files (*.s)|*.s|All files (*.*)|*.*"};
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                codeView.Text = String.Join(Environment.NewLine, CodeReader.ReadAll(dialog.FileName));
+            //    codeView.Text = String.Join(Environment.NewLine, CodeReader.ReadAll(dialog.FileName));
             }
         }
 
@@ -31,5 +31,11 @@ namespace Assembler
         {
             Environment.Exit(0);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            registerTable.DataSource = Memory.getValues();
+        }
+
     }
 }
