@@ -1,0 +1,9 @@
+c:\users\tim\documents\visual studio 2013\Projects\Assembler\Assembler\bin\Debug\Assembler.exe.config
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\bin\Debug\Assembler.exe
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\bin\Debug\Assembler.pdb
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.csprojResolveAssemblyReference.cache
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.Form1.resources
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.Properties.Resources.resources
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.exe
+C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.pdb
