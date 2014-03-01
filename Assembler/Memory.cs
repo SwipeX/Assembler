@@ -12,12 +12,8 @@ namespace Assembler
             "IR", "CC"
         };
 
-        private static readonly int[] RegisterValues =
-        {
-            A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC
-        };
-
         private static readonly int[] Stack = new int[256];
+
         public static int getValueAt(int index)
         {
             if (index >= 0 && index < Stack.Length)
@@ -33,6 +29,10 @@ namespace Assembler
 
         internal static object getValues()
         {
+            int[] RegisterValues =
+            {
+                A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC
+            };
             var table = new DataTable();
             table.Columns.Add("Register");
             table.Columns.Add("Value");

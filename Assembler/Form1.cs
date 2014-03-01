@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace Assembler
@@ -23,7 +16,9 @@ namespace Assembler
             var dialog = new OpenFileDialog {Filter = "assembly files (*.s)|*.s|All files (*.*)|*.*"};
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-            //    codeView.Text = String.Join(Environment.NewLine, CodeReader.ReadAll(dialog.FileName));
+                ArrayList read = CodeReader.ReadAll(dialog.FileName);
+                read = CodeReader.NormalizeText(read);
+                ArrayList instructions = CodeReader.getInstructions(read);
             }
         }
 
@@ -34,8 +29,8 @@ namespace Assembler
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Memory.ACC++;
             registerTable.DataSource = Memory.getValues();
         }
-
     }
 }

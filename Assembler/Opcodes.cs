@@ -1,4 +1,6 @@
-﻿namespace Assembler
+﻿using System;
+
+namespace Assembler
 {
     public class Opcodes
     {
@@ -16,6 +18,7 @@
         public const int BG = 0x10;
         public const int NOP = 0x11;
         public const int HLT = 0x12;
+
         public static string[] NAMES =
         {
             "LDA",
@@ -32,5 +35,10 @@
             "NOP",
             "HLT"
         };
+
+        public static int GetOpcode(String opcode)
+        {
+            return Array.IndexOf(NAMES, opcode.ToUpper());
+        }
     }
 }
