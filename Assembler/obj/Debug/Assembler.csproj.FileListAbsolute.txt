@@ -7,3 +7,12 @@ C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.exe
 C:\Users\Tim\Documents\Visual Studio 2013\Projects\Assembler\Assembler\obj\Debug\Assembler.pdb
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.exe.config
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.exe
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.pdb
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csprojResolveAssemblyReference.cache
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Form1.resources
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Properties.Resources.resources
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.exe
+C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.pdb
