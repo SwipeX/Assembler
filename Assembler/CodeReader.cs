@@ -7,7 +7,6 @@ namespace Assembler
 {
     public class CodeReader
     {
-        //private static readonly Regex regex = new Regex(@"(?:\S|(?<=\\))+",
         private static readonly Regex preregex = new Regex(@"\!.*$*",
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex regex = new Regex(@"\S+",
