@@ -18,7 +18,14 @@ namespace Assembler
             {
                 ArrayList read = CodeReader.ReadAll(dialog.FileName);
                 read = CodeReader.NormalizeText(read);
-                ArrayList instructions = CodeReader.getInstructions(read);
+                try
+                {
+                    ArrayList instructions = CodeReader.getInstructions(read);
+                }
+                catch (Exception ex)
+                {
+                    //OH NOES!!! syntax error. make a message box or something.
+                }
             }
         }
 

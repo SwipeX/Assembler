@@ -101,7 +101,14 @@ namespace Assembler
         }
         public static ArrayList getInstructions(ArrayList normalizedText)
         {
-            normalizedText = handleJumps(normalizedText);
+            try
+            {
+                normalizedText = handleJumps(normalizedText);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
             var instructions = new ArrayList();
             for (int index = 0; index < normalizedText.Count; index++)
             {
