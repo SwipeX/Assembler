@@ -108,8 +108,10 @@ namespace Assembler
         private static Boolean textEquals(String input, params String[] possible)
         {
             foreach (String str in possible)
+            {
                 if (str.Equals(input))
                     return true;
+            }
             return false;
         }
 
@@ -129,6 +131,18 @@ namespace Assembler
                 var element = normalizedText[index] as string;
                 string[] splitText = element.Split(new[] {','});
                 instructions.Add(new Instruction(Opcodes.GetOpcode(splitText[0]), Convert.ToInt32(splitText[1]), index));
+            }
+            return instructions;
+        }
+
+        public static int[] readBinary(String fileName)
+        {
+            var reader = new BinaryReader(new FileStream(fileName, FileMode.Open));
+            int count = reader.ReadInt32();
+            var instructions = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                instructions[i] = reader.ReadInt32();
             }
             return instructions;
         }
