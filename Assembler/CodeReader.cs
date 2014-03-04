@@ -85,9 +85,7 @@ namespace Assembler
             }
             for (int i = 0; i < newNormalizedText.Count; i++)
             {
-                if (((newNormalizedText[i] as ArrayList)[0] as string).Equals("ba") || ((newNormalizedText[i] as ArrayList)[0] as string).Equals("be")
-                    || ((newNormalizedText[i] as ArrayList)[0] as string).Equals("bl") || ((newNormalizedText[i] as ArrayList)[0] as string).Equals("bg")
-                    )
+                if (textEquals((newNormalizedText[i] as ArrayList)[0] as string, "ba","be","bl","bg"))
                 {
                     foreach(KeyValuePair<string, int> pair in indexes){
                         if (pair.Key.Equals(((newNormalizedText[i] as ArrayList)[1] as string)))
@@ -98,6 +96,14 @@ namespace Assembler
                 }
             }
                 return newNormalizedText;
+        }
+
+        private static Boolean textEquals(String input, params String[] possible)
+        {
+          foreach(String str in possible)
+            if (str.Equals(input))
+                return true;
+            return false;
         }
         public static ArrayList getInstructions(ArrayList normalizedText)
         {
