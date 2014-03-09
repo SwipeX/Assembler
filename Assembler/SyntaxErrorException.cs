@@ -1,5 +1,5 @@
 ﻿using System;
-
+//Written by Ryan Serva
 public class SyntaxErrorException:Exception
 {
 	public SyntaxErrorException()

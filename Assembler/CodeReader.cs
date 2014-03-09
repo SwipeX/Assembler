@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
+//Written by Ryan Serva
 namespace Assembler
 {
     public class CodeReader
@@ -133,20 +134,28 @@ namespace Assembler
                 bool flag = false;
                 if((normalizedText[index] as ArrayList).Count>1){
                     var temp = ((normalizedText[index] as ArrayList)[1] as string);
-                    if(temp.Length>2&&temp.StartsWith("#$")){
-                        //immediate value
-                        value = temp.Substring(2, temp.Length-2);
-                        flag = true;
-                    }
-                    else if (temp.Length>1&&temp.StartsWith("$"))
+                    try
                     {
-                        //register value
-                        value = temp.Substring(1, temp.Length-1);
+                        if (temp.Length > 2 && temp.StartsWith("#$"))
+                        {
+                            //immediate value
+                            value = temp.Substring(2, temp.Length - 2);
+                            flag = true;
+                        }
+                        else if (temp.Length > 1 && temp.StartsWith("$"))
+                        {
+                            //register value
+                            value = temp.Substring(1, temp.Length - 1);
+                        }
+                        else
+                        {
+                            value = temp;
+                            //jump
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        value = temp;
-                        //jump
+                        throw new SyntaxErrorException(temp+" unrecognized");
                     }
                 }
                 int theOpcode = Opcodes.GetOpcode(element);
