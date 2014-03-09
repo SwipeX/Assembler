@@ -80,7 +80,7 @@ namespace Assembler
                     }
                     else
                     {
-                        throw new SyntaxErrorException();
+                        throw new SyntaxErrorException("Unknown instruction line:"+(i+1));
                     }
                 }
                 else if (temp.Count == 2)
@@ -97,7 +97,7 @@ namespace Assembler
                     {
                         if (pair.Key.Equals(((newNormalizedText[i] as ArrayList)[1] as string)))
                         {
-                            (newNormalizedText[i] as ArrayList)[1] = pair.Value;
+                            (newNormalizedText[i] as ArrayList)[1] = Convert.ToString(pair.Value);
                         }
                     }
                 }
@@ -121,16 +121,40 @@ namespace Assembler
             {
                 normalizedText = handleJumps(normalizedText);
             }
-            catch (Exception e)
+            catch (SyntaxErrorException e)
             {
                 throw e;
             }
             var instructions = new ArrayList();
             for (int index = 0; index < normalizedText.Count; index++)
             {
-                var element = normalizedText[index] as string;
-                string[] splitText = element.Split(new[] {','});
-                instructions.Add(new Instruction(Opcodes.GetOpcode(splitText[0]), Convert.ToInt32(splitText[1]), index));
+                var element = (normalizedText[index] as ArrayList)[0] as string;
+                var value = "0";
+                bool flag = false;
+                if((normalizedText[index] as ArrayList).Count>1){
+                    var temp = ((normalizedText[index] as ArrayList)[1] as string);
+                    if(temp.Length>2&&temp.StartsWith("#$")){
+                        //immediate value
+                        value = temp.Substring(2, temp.Length-2);
+                        flag = true;
+                    }
+                    else if (temp.Length>1&&temp.StartsWith("$"))
+                    {
+                        //register value
+                        value = temp.Substring(1, temp.Length-1);
+                    }
+                    else
+                    {
+                        value = temp;
+                        //jump
+                    }
+                }
+                int theOpcode = Opcodes.GetOpcode(element);
+                if (theOpcode < 0)
+                {
+                    throw new SyntaxErrorException(element+" unrecognized");
+                }
+                instructions.Add(new Instruction(theOpcode, Convert.ToInt32(value), index,flag));
             }
             return instructions;
         }

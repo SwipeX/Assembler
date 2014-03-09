@@ -22,10 +22,14 @@ namespace Assembler
                 {
                     ArrayList instructions = CodeReader.getInstructions(read);
                 }
-                catch (Exception ex)
+                catch (SyntaxErrorException ex)
                 {
                     //OH NOES!!! syntax error. make a message box or something.
+                    MessageBox.Show(ex.Message, "Error Message",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Error);
                 }
+
             }
         }
 
