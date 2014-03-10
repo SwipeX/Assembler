@@ -22,22 +22,14 @@ namespace Assembler
            this._flag = flag;
        }
 
-       public int GetOpcode()
+       public int intValueOfInstruction()
        {
-           return _opcode;
-       }
-       public bool GetFlag()
-       {
-           return _flag;
-       }
-       public int GetIndex()
-       {
-           return _index;
+           int intvalue = _opcode << 25;//7 bits for instruction
+           if (_flag)
+                intvalue += 1 << 24;//1 bit for flag
+           intvalue += _value;//value is on the end
+           return intvalue;
        }
 
-       public int GetValue()
-       {
-           return _value;
-       }
    }
 }

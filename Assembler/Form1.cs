@@ -18,9 +18,10 @@ namespace Assembler
             {
                 ArrayList read = CodeReader.ReadAll(dialog.FileName);
                 read = CodeReader.NormalizeText(read);
+                ArrayList instructions= new ArrayList();
                 try
                 {
-                    ArrayList instructions = CodeReader.getInstructions(read);
+                    instructions = CodeReader.getInstructions(read);
                 }
                 catch (SyntaxErrorException ex)
                 {
@@ -29,6 +30,12 @@ namespace Assembler
                                  MessageBoxButtons.OK,
                                  MessageBoxIcon.Error);
                 }
+                int[] binaryinstructions= new int[instructions.Count];
+                for (int i = 0; i < instructions.Count;i++ )
+                {
+                    binaryinstructions[i] = (instructions[i] as Instruction).intValueOfInstruction();
+                }
+                CodeWriter.writeBinary(binaryinstructions, "code.out");
 
             }
         }
