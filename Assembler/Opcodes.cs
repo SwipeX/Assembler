@@ -5,8 +5,8 @@ namespace Assembler
     public class Opcodes
     {
         //to get string for instruction do: NAMES[LDA];
-        public const int LDA = 0x1;
-        public const int STA = 0x2;
+        public const int LDA = 0x0;
+        public const int STA = 0x1;
         public const int ADD = 0x2;
         public const int SUB = 0x3;
         public const int AND = 0x4;
