@@ -170,14 +170,27 @@ namespace Assembler
 
         public static int[] readBinary(String fileName)
         {
-            var reader = new BinaryReader(new FileStream(fileName, FileMode.Open));
-            int count = reader.ReadInt32();
-            var instructions = new int[count];
+            FileStream inFile = new FileStream(fileName, FileMode.Open);
+            var reader = new BinaryReader(inFile);
+            ArrayList instructions = new ArrayList();
+            int i = 0;
+            while (inFile.Position != inFile.Length)
+            {
+                instructions.Add(reader.ReadInt32());
+                i++;
+            }
+            /*
             for (int i = 0; i < count; i++)
             {
                 instructions[i] = reader.ReadInt32();
             }
-            return instructions;
+            */
+            int[] fuckYOUCSHARP = new int[instructions.Count];
+            for (int g = 0; g < instructions.Count; g++)
+            {
+                fuckYOUCSHARP[g] = (int)instructions[g];
+            }
+            return fuckYOUCSHARP;
         }
     }
 }

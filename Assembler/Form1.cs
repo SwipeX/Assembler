@@ -36,6 +36,8 @@ namespace Assembler
                     binaryinstructions[i] = (instructions[i] as Instruction).intValueOfInstruction();
                 }
                 CodeWriter.writeBinary(binaryinstructions, "code.out");
+                int[] thisstuff = CodeReader.readBinary("code.out");
+
 
             }
         }
