@@ -69,7 +69,7 @@ namespace Assembler
                 }
                 if (temp.Count == 1)
                 {
-                    if (temp[0].Equals("nop"))
+                    if (temp[0].Equals("nop")||temp[0].Equals("nota"))
                     {
                         newNormalizedText.Add(temp);
                         linecount++;
