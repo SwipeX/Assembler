@@ -21,7 +21,6 @@ namespace Assembler
            this._index = index;
            this._flag = flag;
        }
-
        public int intValueOfInstruction()
        {
            int intvalue = _opcode << 25;//7 bits for instruction
