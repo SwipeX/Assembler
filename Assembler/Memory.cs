@@ -21,7 +21,7 @@ namespace Assembler
             return -1;
         }
 
-        public void setValueAt(int index, int value)
+        public static void setValueAt(int index, int value)
         {
             if (index >= 0 && index < Stack.Length)
                 Stack[index] = value;

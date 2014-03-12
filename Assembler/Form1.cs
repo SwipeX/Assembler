@@ -37,8 +37,7 @@ namespace Assembler
                 }
                 CodeWriter.writeBinary(binaryinstructions, "code.out");
                 int[] thisstuff = CodeReader.readBinary("code.out");
-
-
+                Processor.executeAll(thisstuff);
             }
         }
 
