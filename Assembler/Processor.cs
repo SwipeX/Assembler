@@ -92,7 +92,7 @@ namespace Assembler
 
         internal static void executeAll(int[] thisstuff)
         {
-            while(Memory.PC < thisstuff.Length)
+            while(Memory.PC < thisstuff.Length-1)
             {
                 execute(thisstuff[Memory.PC++]);
 
