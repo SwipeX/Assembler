@@ -94,8 +94,8 @@ namespace Assembler
         {
             while(Memory.PC < thisstuff.Length-1)
             {
-                execute(thisstuff[Memory.PC++]);
-
+                execute(thisstuff[Memory.PC]);
+                Memory.PC++;
             }
         }
     }
