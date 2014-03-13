@@ -27,7 +27,7 @@ namespace Assembler
             "SUB",
             "AND",
             "OR",
-            "NOT",
+            "NOTA",
             "BA",
             "BE",
             "BL",
