@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SegmentationException.cs" />
     <Compile Include="CodeReader.cs" />
     <Compile Include="CodeWriter.cs" />
     <Compile Include="ALU.cs" />

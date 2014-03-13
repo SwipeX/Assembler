@@ -10,9 +10,17 @@ namespace Assembler
     {
         public static void execute(int instruction)
         {
+            try { 
             int opcode = instruction >> 25;
-            bool immediate = (instruction ^ (1 << 24)) == 1;
-            int value = (instruction >> (8 * 0)) & 0xff + (instruction >> (8 * 1)) & 0xff;
+            bool immediate = ((instruction ^ (opcode<<25))>>24) == 1;
+            int value;
+            if(immediate){
+                value = ((instruction ^ ((opcode << 25) | (1<<24) )) ) ;
+            }
+            else
+            {
+                value = ((instruction ^ ((opcode << 25) )) );
+            }
             switch (opcode)
             {
                 case Opcodes.LDA:
@@ -26,7 +34,7 @@ namespace Assembler
                     }
                     break;
                 case Opcodes.STA:
-                    Memory.setValueAt(value, Memory.ACC);
+                    Memory.setValueAt(value,Memory.ACC);
                     break;
                 case Opcodes.ADD:
                     if (immediate)
@@ -88,11 +96,15 @@ namespace Assembler
                 case Opcodes.NOP: ALU.Add(0); break;
                 case Opcodes.HLT: break;
             }
+            
+              }catch(Exception e){
+                  throw e;
+              } 
         }
 
         internal static void executeAll(int[] thisstuff)
         {
-            while(Memory.PC < thisstuff.Length-1)
+            while(Memory.PC < thisstuff.Length)
             {
                 execute(thisstuff[Memory.PC]);
                 Memory.PC++;

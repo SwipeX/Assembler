@@ -17,14 +17,26 @@ namespace Assembler
         public static int getValueAt(int index)
         {
             if (index >= 0 && index < Stack.Length)
+            {
                 return Stack[index];
+            }
+            else
+            {
+                throw new SegmentationException();
+            }
             return -1;
         }
 
         public static void setValueAt(int index, int value)
         {
             if (index >= 0 && index < Stack.Length)
+            {
                 Stack[index] = value;
+            }
+            else
+            {
+                throw new SegmentationException();
+            }
         }
 
         internal static object getValues()

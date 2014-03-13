@@ -23,7 +23,7 @@ namespace Assembler
                 {
                     instructions = CodeReader.getInstructions(read);
                 }
-                catch (SyntaxErrorException ex)
+                catch (Exception ex)
                 {
                     //OH NOES!!! syntax error. make a message box or something.
                     MessageBox.Show(ex.Message, "Error Message",
@@ -37,7 +37,17 @@ namespace Assembler
                 }
                 CodeWriter.writeBinary(binaryinstructions, "code.out");
                 int[] thisstuff = CodeReader.readBinary("code.out");
-                Processor.executeAll(thisstuff);
+                try
+                {
+                    Processor.executeAll(thisstuff);
+                }
+                catch (Exception ep)
+                {
+                    MessageBox.Show(ep.Message, "Error Message",
+                                 MessageBoxButtons.OK,
+                                 MessageBoxIcon.Error);
+                }
+                updateGUI();
             }
         }
 
@@ -48,7 +58,10 @@ namespace Assembler
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Memory.ACC++;
+            registerTable.DataSource = Memory.getValues();
+        }
+        public void updateGUI()
+        {
             registerTable.DataSource = Memory.getValues();
         }
     }
