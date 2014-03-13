@@ -24,11 +24,9 @@ namespace Assembler
                     {
                       Memory.ACC =  Memory.getValueAt(value);
                     }
-                    Memory.PC++;
                     break;
                 case Opcodes.STA:
                     Memory.setValueAt(value, Memory.ACC);
-                    Memory.PC++;
                     break;
                 case Opcodes.ADD:
                     if (immediate)
@@ -39,7 +37,6 @@ namespace Assembler
                     {
                         ALU.Add(Memory.getValueAt(value));
                     }
-                    Memory.PC++;
                     break;
                 case Opcodes.SUB:
                     if (immediate)
@@ -50,7 +47,6 @@ namespace Assembler
                     {
                         ALU.Sub(Memory.getValueAt(value));
                     }
-                    Memory.PC++;
                     break;
                 case Opcodes.AND:
                     if (immediate)
@@ -61,7 +57,7 @@ namespace Assembler
                     {
                         ALU.And(Memory.getValueAt(value));
                     }
-                    Memory.PC++;
+     
                     break;
                 case Opcodes.OR: if (immediate)
                     if (immediate)
@@ -72,23 +68,23 @@ namespace Assembler
                     {
                         ALU.Or(Memory.getValueAt(value));
                     } 
-                    Memory.PC++;
+ 
                     break;
                 case Opcodes.NOTA:
                     ALU.Nor();
                     break;
                 case Opcodes.BA: 
-                    Memory.PC = value;
+                    Memory.PC = value-1;
                     break;
                 case Opcodes.BE: 
                     if(Memory.CC == 0)
-                        Memory.PC = value;break;
+                        Memory.PC = value-1;break;
                 case Opcodes.BL:
                     if(Memory.CC < 0 )
-                        Memory.PC = value;break;
+                        Memory.PC = value-1;break;
                 case Opcodes.BG: 
                     if(Memory.CC > 0 )
-                        Memory.PC = value;break;
+                        Memory.PC = value-1;break;
                 case Opcodes.NOP: ALU.Add(0); break;
                 case Opcodes.HLT: break;
             }
@@ -98,7 +94,8 @@ namespace Assembler
         {
             while(Memory.PC < thisstuff.Length)
             {
-                execute(thisstuff[Memory.PC]);
+                execute(thisstuff[Memory.PC++]);
+
             }
         }
     }
