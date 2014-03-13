@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
-//Written by Ryan Serva
+//Written by Ryan Serva 
+//Cleaned by Tim Dekker
+
 namespace Assembler
 {
     public class CodeReader
@@ -69,7 +72,7 @@ namespace Assembler
                 }
                 if (temp.Count == 1)
                 {
-                    if (temp[0].Equals("nop")||temp[0].Equals("nota"))
+                    if (temp[0].Equals("nop") || temp[0].Equals("nota"))
                     {
                         newNormalizedText.Add(temp);
                         linecount++;
@@ -81,7 +84,7 @@ namespace Assembler
                     }
                     else
                     {
-                        throw new SyntaxErrorException("Unknown instruction line:"+(i+1));
+                        throw new SyntaxErrorException("Unknown instruction line:" + (i + 1));
                     }
                 }
                 else if (temp.Count == 2)
@@ -130,9 +133,10 @@ namespace Assembler
             for (int index = 0; index < normalizedText.Count; index++)
             {
                 var element = (normalizedText[index] as ArrayList)[0] as string;
-                var value = "0";
+                string value = "0";
                 bool flag = false;
-                if((normalizedText[index] as ArrayList).Count>1){
+                if ((normalizedText[index] as ArrayList).Count > 1)
+                {
                     var temp = ((normalizedText[index] as ArrayList)[1] as string);
                     try
                     {
@@ -155,42 +159,34 @@ namespace Assembler
                     }
                     catch (Exception e)
                     {
-                        throw new SyntaxErrorException(temp+" unrecognized");
+                        throw new SyntaxErrorException(temp + " unrecognized");
                     }
                 }
                 int theOpcode = Opcodes.GetOpcode(element);
                 if (theOpcode < 0)
                 {
-                    throw new SyntaxErrorException(element+" unrecognized");
+                    throw new SyntaxErrorException(element + " unrecognized");
                 }
-                instructions.Add(new Instruction(theOpcode, Convert.ToInt32(value), index,flag));
+                instructions.Add(new Instruction(theOpcode, Convert.ToInt32(value), index, flag));
             }
             return instructions;
         }
 
         public static int[] readBinary(String fileName)
         {
-            FileStream inFile = new FileStream(fileName, FileMode.Open);
+            var inFile = new FileStream(fileName, FileMode.Open);
             var reader = new BinaryReader(inFile);
-            ArrayList instructions = new ArrayList();
+            var instructions = new ArrayList();
             int i = 0;
             while (inFile.Position != inFile.Length)
             {
                 instructions.Add(reader.ReadInt32());
                 i++;
             }
-            /*
-            for (int i = 0; i < count; i++)
-            {
-                instructions[i] = reader.ReadInt32();
-            }
-            */
-            int[] fuckYOUCSHARP = new int[instructions.Count];
-            for (int g = 0; g < instructions.Count; g++)
-            {
-                fuckYOUCSHARP[g] = (int)instructions[g];
-            }
-            return fuckYOUCSHARP;
+            inFile.Close();
+            Form1.toolStripStatusLabel1.Text = "Read: " + fileName;
+            Form1.updateUI();
+            return instructions.Cast<int>().ToArray();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Assembler
             "IR", "CC"
         };
 
-        private static readonly int[] Stack = new int[256];
+        private static int[] Stack = new int[256];
 
         public static int getValueAt(int index)
         {
@@ -20,11 +20,7 @@ namespace Assembler
             {
                 return Stack[index];
             }
-            else
-            {
-                throw new SegmentationException();
-            }
-            return -1;
+            throw new SegmentationException();
         }
 
         public static void setValueAt(int index, int value)
@@ -53,6 +49,22 @@ namespace Assembler
                 table.Rows.Add(new object[] {RegisterNames[i], RegisterValues[i]});
             }
             return table;
+        }
+
+        internal static void reset()
+        {
+            A = 0;
+            B = 0;
+            ACC = 0;
+            ZERO = 0;
+            ONE = 0;
+            PC = 0;
+            MAR = 0;
+            MDR = 0;
+            TEMP = 0;
+            IR = 0;
+            CC = 0;
+            Stack = new int[256];
         }
     }
 }
