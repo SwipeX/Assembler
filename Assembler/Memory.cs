@@ -4,8 +4,11 @@ namespace Assembler
 {
     internal class Memory
     {
+        public static int cacheSize=2;
+        public static int blockSize=1;
         public static int A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC;
         public static bool direct = true;
+        public static Cache myCash;
         private static readonly string[] RegisterNames =
         {
             "A", "B", "ACC", "ZERO", "ONE", "PC", "MAR", "MDR", "TEMP",
@@ -16,14 +19,27 @@ namespace Assembler
 
         public static int getValueAt(int index)
         {
+            //cachey stuffs
             if (index >= 0 && index < Stack.Length)
             {
-                return Stack[index];
+                return myCash.getValueAt(index);
             }
             throw new SegmentationException();
         }
 
         public static void setValueAt(int index, int value)
+        {
+            if (index >= 0 && index < Stack.Length)
+            {
+                myCash.setValueAt(index, value);
+            }
+            else
+            {
+                throw new SegmentationException();
+            }         
+        }
+
+        public static void setStackAt(int index, int value)
         {
             if (index >= 0 && index < Stack.Length)
             {
@@ -35,6 +51,17 @@ namespace Assembler
             }
         }
 
+        public static int getStackAt(int index)
+        {
+            if (index >= 0 && index < Stack.Length)
+            {
+               return  Stack[index];
+            }
+            else
+            {
+                throw new SegmentationException();
+            }
+        }
         internal static object getValues()
         {
             int[] RegisterValues =

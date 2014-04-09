@@ -26,6 +26,9 @@ namespace Assembler
 
         public static void updateUI()
         {
+            if (Memory.myCash != null && Memory.myCash.misses>0)
+            hitLabel.Text = "Hits: " + Memory.myCash.hits + " Misses: " + Memory.myCash.misses
+                + " Hit Percentage:"+(Memory.myCash.hits*100 / Memory.myCash.misses) + " %";
             registerTable.DataSource = Memory.getValues();
             registerTable.Invalidate();
             statusStrip1.Refresh();
@@ -87,6 +90,7 @@ namespace Assembler
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Memory.myCash = new Cache(Memory.cacheSize, Memory.blockSize);
             int[] packedInstructions = CodeReader.readBinary(lastLoadedFile);
             try
             {
@@ -116,6 +120,25 @@ namespace Assembler
         private void twoWayBtn_CheckedChanged(object sender, EventArgs e)
         {
             Memory.direct = false;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            int value = (int)numericUpDown2.Value;
+            if (value < 2) value = 2;
+            if (value > 16) value = 16;
+            numericUpDown2.Value = value;
+            Memory.cacheSize = value;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            Memory.blockSize = (int)numericUpDown1.Value;
         }
     }
 }
