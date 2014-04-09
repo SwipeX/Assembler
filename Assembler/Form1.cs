@@ -107,5 +107,15 @@ namespace Assembler
             Memory.reset();
             updateUI();
         }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.direct = true;
+        }
+
+        private void twoWayBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.direct = false;
+        }
     }
 }

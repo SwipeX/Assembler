@@ -5,7 +5,7 @@ namespace Assembler
     internal class Memory
     {
         public static int A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC;
-
+        public static bool direct = true;
         private static readonly string[] RegisterNames =
         {
             "A", "B", "ACC", "ZERO", "ONE", "PC", "MAR", "MDR", "TEMP",
