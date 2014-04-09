@@ -26,9 +26,9 @@ namespace Assembler
 
         public static void updateUI()
         {
-            if (Memory.myCash != null && Memory.myCash.misses>0)
+            if (Memory.myCash != null && Memory.myCash.hits + Memory.myCash.misses > 0)
             hitLabel.Text = "Hits: " + Memory.myCash.hits + " Misses: " + Memory.myCash.misses
-                + " Hit Percentage:"+(Memory.myCash.hits*100 / Memory.myCash.misses) + " %";
+                + " Hit Percentage:"+(Memory.myCash.hits*100 / (Memory.myCash.hits+Memory.myCash.misses)) + " %";
             registerTable.DataSource = Memory.getValues();
             registerTable.Invalidate();
             statusStrip1.Refresh();

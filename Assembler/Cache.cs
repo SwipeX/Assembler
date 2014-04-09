@@ -28,17 +28,17 @@ namespace Assembler
             try{
                 if (Memory.direct)
                 {
-                    g = blocks[(((index+1) % blockSize)%Size)].getValueAt(index);
+                    g = blocks[(((index) / blockSize+1)%Size)].getValueAt(index);
                 }
                 else
                 {
                     try
                     {
-                        g = blocks[(((index+1) % blockSize)%Size)*2].getValueAt(index);
+                        g = blocks[(((index) / blockSize)*2+1)%Size].getValueAt(index);
                     }
                     catch (MissException)
                     {
-                        g = blocks[(((index+1) % blockSize)%Size)*2+1].getValueAt(index);
+                        g = blocks[(((index) / blockSize)*2+2)%Size].getValueAt(index);
                     }
                 }
                 hits++;
@@ -54,22 +54,24 @@ namespace Assembler
             try { 
             if (Memory.direct)
             {
-                blocks[((index+1) % (blockSize))%Size].writeValue(index, value);
+                blocks[((index) / (blockSize)+1)%Size].writeValue(index, value);
             }
             else
             {
                 try
                 {
-                    blocks[(((index+1) % blockSize)%Size) * 2].writeValue(index,value);
+                    blocks[((((index) / blockSize)) * 2+1)%Size].writeValue(index,value);
                 }
                 catch (MissException)
                 {
-                    blocks[(((index+1) % blockSize)%Size) * 2 + 1].writeValue(index,value);
+                    blocks[((((index) / blockSize)) * 2+2)%Size].writeValue(index,value);
                 }
             }
+            hits++;
             }
             catch (MissException)
             {
+                misses++;
                 Memory.setStackAt(index, value);
                 replaceBlock(index);
             }
@@ -81,7 +83,7 @@ namespace Assembler
                 for(int i = 0;i<blockSize;i++){
                     newblock[i]=Memory.getStackAt(index+i);
                 }
-                blocks[(index%blockSize)%Size].replaceBlock(newblock,index);
+                blocks[(index/blockSize+1)%Size].replaceBlock(newblock,index);
             }
             else
             {
@@ -92,7 +94,7 @@ namespace Assembler
                 {
                     newblock[i] = Memory.getStackAt(index + i);
                 }
-                blocks[(index % blockSize)*2+g].replaceBlock(newblock, index);
+                blocks[((((index) / blockSize)) * 2 + 1+g) % Size].replaceBlock(newblock, index);
             }
         }
     }
