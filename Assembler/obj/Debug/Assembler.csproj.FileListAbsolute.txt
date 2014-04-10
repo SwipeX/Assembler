@@ -20,3 +20,4 @@ C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csprojResolveA
 C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Form1.resources
 C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Properties.Resources.resources
 C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
+C:\Users\Tim\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.exe.config
