@@ -33,12 +33,11 @@
             this.stepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            registerTable = new System.Windows.Forms.DataGridView();
-            statusStrip1 = new System.Windows.Forms.StatusStrip();
-            toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            Form1.registerTable = new System.Windows.Forms.DataGridView();
+            Form1.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            Form1.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.label1 = new System.Windows.Forms.Label();
-            statusLabel = new System.Windows.Forms.Label();
-            hitLabel = new System.Windows.Forms.Label();
+            Form1.hitLabel = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.twoWayBtn = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -47,8 +46,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(registerTable)).BeginInit();
-            statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(Form1.registerTable)).BeginInit();
+            Form1.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -97,26 +96,26 @@
             // 
             // registerTable
             // 
-            registerTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            registerTable.Location = new System.Drawing.Point(0, 27);
-            registerTable.Name = "registerTable";
-            registerTable.Size = new System.Drawing.Size(250, 293);
-            registerTable.TabIndex = 3;
+            Form1.registerTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Form1.registerTable.Location = new System.Drawing.Point(0, 27);
+            Form1.registerTable.Name = "registerTable";
+            Form1.registerTable.Size = new System.Drawing.Size(250, 293);
+            Form1.registerTable.TabIndex = 3;
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            toolStripStatusLabel1});
-            statusStrip1.Location = new System.Drawing.Point(0, 322);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(489, 22);
-            statusStrip1.TabIndex = 4;
+            Form1.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            Form1.toolStripStatusLabel1});
+            Form1.statusStrip1.Location = new System.Drawing.Point(0, 322);
+            Form1.statusStrip1.Name = "statusStrip1";
+            Form1.statusStrip1.Size = new System.Drawing.Size(489, 22);
+            Form1.statusStrip1.TabIndex = 4;
             // 
             // toolStripStatusLabel1
             // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new System.Drawing.Size(108, 17);
-            toolStripStatusLabel1.Text = "Load a file to begin";
+            Form1.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            Form1.toolStripStatusLabel1.Size = new System.Drawing.Size(108, 17);
+            Form1.toolStripStatusLabel1.Text = "Load a file to begin";
             // 
             // label1
             // 
@@ -129,25 +128,16 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Cache";
             // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = true;
-            statusLabel.Location = new System.Drawing.Point(284, 62);
-            statusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new System.Drawing.Size(40, 13);
-            statusLabel.TabIndex = 6;
-            statusLabel.Text = "Status:";
-            // 
             // hitLabel
             // 
-            hitLabel.AutoSize = true;
-            hitLabel.Location = new System.Drawing.Point(284, 101);
-            hitLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            hitLabel.Name = "hitLabel";
-            hitLabel.Size = new System.Drawing.Size(28, 13);
-            hitLabel.TabIndex = 7;
-            hitLabel.Text = "Hits:";
+            Form1.hitLabel.AutoSize = true;
+            Form1.hitLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            Form1.hitLabel.Location = new System.Drawing.Point(274, 71);
+            Form1.hitLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            Form1.hitLabel.Name = "hitLabel";
+            Form1.hitLabel.Size = new System.Drawing.Size(38, 18);
+            Form1.hitLabel.TabIndex = 7;
+            Form1.hitLabel.Text = "Hits:";
             // 
             // radioButton1
             // 
@@ -184,7 +174,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.twoWayBtn);
-            this.groupBox1.Location = new System.Drawing.Point(277, 131);
+            this.groupBox1.Location = new System.Drawing.Point(278, 113);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -211,8 +201,12 @@
             this.numericUpDown1.Location = new System.Drawing.Point(33, 98);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.Value = 1;
             this.numericUpDown1.TabIndex = 15;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label3
@@ -240,11 +234,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(489, 344);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(hitLabel);
-            this.Controls.Add(statusLabel);
+            this.Controls.Add(Form1.hitLabel);
             this.Controls.Add(this.label1);
-            this.Controls.Add(statusStrip1);
-            this.Controls.Add(registerTable);
+            this.Controls.Add(Form1.statusStrip1);
+            this.Controls.Add(Form1.registerTable);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -252,9 +245,9 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(registerTable)).EndInit();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(Form1.registerTable)).EndInit();
+            Form1.statusStrip1.ResumeLayout(false);
+            Form1.statusStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
@@ -272,8 +265,6 @@
         private System.Windows.Forms.ToolStripMenuItem stepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.Label label1;
-        public static System.Windows.Forms.Label statusLabel;
-        public static System.Windows.Forms.Label hitLabel;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton twoWayBtn;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -281,6 +272,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        public static  System.Windows.Forms.Label hitLabel;
         public static System.Windows.Forms.DataGridView registerTable;
         public static System.Windows.Forms.StatusStrip statusStrip1;
         public static System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

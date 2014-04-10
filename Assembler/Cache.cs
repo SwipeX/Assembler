@@ -1,73 +1,77 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assembler
 {
-    class Cache
+    internal class Cache
     {
-        CacheBlock[] blocks;
-        private int blockSize;
-        public int hits =0;
-        public int misses=0;
-        private int Size;
+        private readonly int blockSize;
+        private readonly CacheBlock[] blocks;
+        private readonly int size;
+        public int hits = 0;
+        public int misses = 0;
+
         public Cache(int size, int blocksize)
         {
             blocks = new CacheBlock[size];
             for (int i = 0; i < blocks.Length; i++)
             {
-                blocks[i] = new CacheBlock(blocksize,257);
+                blocks[i] = new CacheBlock(blocksize, 257);
             }
             blockSize = blocksize;
-            Size = size;
+            this.size = size;
         }
-        public int getValueAt(int index){
+
+        public int getValueAt(int index)
+        {
             int g;
-            try{
-                if (Memory.direct)
+            try
+            {
+                if (Memory.directCache)
                 {
-                    g = blocks[(((index) / blockSize+1)%Size)].getValueAt(index);
+                    g = blocks[(((index)/blockSize + 1)%size)].getValueAt(index);
                 }
                 else
                 {
                     try
                     {
-                        g = blocks[(((index) / blockSize)*2+1)%Size].getValueAt(index);
+                        g = blocks[(((index)/blockSize)*2 + 1)%size].getValueAt(index);
                     }
                     catch (MissException)
                     {
-                        g = blocks[(((index) / blockSize)*2+2)%Size].getValueAt(index);
+                        g = blocks[(((index)/blockSize)*2 + 2)%size].getValueAt(index);
                     }
                 }
                 hits++;
                 return g;
-            }catch(MissException e){
+            }
+            catch (MissException e)
+            {
                 misses++;
                 replaceBlock(index);
                 return Memory.getStackAt(index);
             }
         }
+
         public void setValueAt(int index, int value)
         {
-            try { 
-            if (Memory.direct)
+            try
             {
-                blocks[((index) / (blockSize)+1)%Size].writeValue(index, value);
-            }
-            else
-            {
-                try
+                if (Memory.directCache)
                 {
-                    blocks[((((index) / blockSize)) * 2+1)%Size].writeValue(index,value);
+                    blocks[((index)/(blockSize) + 1)%size].writeValue(index, value);
                 }
-                catch (MissException)
+                else
                 {
-                    blocks[((((index) / blockSize)) * 2+2)%Size].writeValue(index,value);
+                    try
+                    {
+                        blocks[((((index)/blockSize))*2 + 1)%size].writeValue(index, value);
+                    }
+                    catch (MissException)
+                    {
+                        blocks[((((index)/blockSize))*2 + 2)%size].writeValue(index, value);
+                    }
                 }
-            }
-            hits++;
+                hits++;
             }
             catch (MissException)
             {
@@ -76,25 +80,28 @@ namespace Assembler
                 replaceBlock(index);
             }
         }
+
         private void replaceBlock(int index)
         {
-            if(Memory.direct){
-                int[] newblock = new int[blockSize];
-                for(int i = 0;i<blockSize;i++){
-                    newblock[i]=Memory.getStackAt(index+i);
-                }
-                blocks[(index/blockSize+1)%Size].replaceBlock(newblock,index);
-            }
-            else
+            if (Memory.directCache)
             {
-                Random whatever = new Random();
-                int g = whatever.Next(1);
-                int[] newblock = new int[blockSize];
+                var newblock = new int[blockSize];
                 for (int i = 0; i < blockSize; i++)
                 {
                     newblock[i] = Memory.getStackAt(index + i);
                 }
-                blocks[((((index) / blockSize)) * 2 + 1+g) % Size].replaceBlock(newblock, index);
+                blocks[(index/blockSize + 1)%size].replaceBlock(newblock, index);
+            }
+            else
+            {
+                var whatever = new Random();
+                int g = whatever.Next(1);
+                var newblock = new int[blockSize];
+                for (int i = 0; i < blockSize; i++)
+                {
+                    newblock[i] = Memory.getStackAt(index + i);
+                }
+                blocks[((((index)/blockSize))*2 + 1 + g)%size].replaceBlock(newblock, index);
             }
         }
     }

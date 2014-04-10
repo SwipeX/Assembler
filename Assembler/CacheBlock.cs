@@ -11,17 +11,17 @@ namespace Assembler
         public int tag;
         private int[] items;
         public  bool dirty;
-        private int Size;
+        private int size;
         public CacheBlock(int size, int tag)
         {
             items = new int[size];
             dirty = false;
-            Size = size;
+            this.size = size;
             this.tag = tag;
         }
         public int getValueAt(int index) 
         {
-            if (index-tag > Size || index-tag < 0)
+            if (index-tag > size || index-tag < 0)
             {
                 throw new MissException();
             }
@@ -32,7 +32,7 @@ namespace Assembler
         }
         public void writeValue(int index, int value)
         {
-            if (index - tag > Size || index - tag < 0)
+            if (index - tag > size || index - tag < 0)
             {
                 throw new MissException();
             }

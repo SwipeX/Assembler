@@ -26,9 +26,9 @@ namespace Assembler
 
         public static void updateUI()
         {
-            if (Memory.myCash != null && Memory.myCash.hits + Memory.myCash.misses > 0)
-            hitLabel.Text = "Hits: " + Memory.myCash.hits + " Misses: " + Memory.myCash.misses
-                + " Hit Percentage:"+(Memory.myCash.hits*100 / (Memory.myCash.hits+Memory.myCash.misses)) + " %";
+            if (Memory.LocalCache != null && Memory.LocalCache.hits + Memory.LocalCache.misses > 0)
+            hitLabel.Text = "Hits: " + Memory.LocalCache.hits + " Misses: " + Memory.LocalCache.misses
+                + " Hit Percentage:"+(Memory.LocalCache.hits*100 / (Memory.LocalCache.hits+Memory.LocalCache.misses)) + " %";
             registerTable.DataSource = Memory.getValues();
             registerTable.Invalidate();
             statusStrip1.Refresh();
@@ -71,6 +71,7 @@ namespace Assembler
         {
             if (stepInstructions == null)
             {
+                Memory.LocalCache = new Cache(Memory.cacheSize, Memory.blockSize);
                 stepInstructions = CodeReader.readBinary(lastLoadedFile);
             }
             if (Memory.PC < stepInstructions.Length)
@@ -85,12 +86,13 @@ namespace Assembler
                 stepInstructions = null;
                 toolStripStatusLabel1.Text = "Done!";
                 updateUI();
+                Memory.clear();
             }
         }
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Memory.myCash = new Cache(Memory.cacheSize, Memory.blockSize);
+            Memory.LocalCache = new Cache(Memory.cacheSize, Memory.blockSize);
             int[] packedInstructions = CodeReader.readBinary(lastLoadedFile);
             try
             {
@@ -104,6 +106,7 @@ namespace Assembler
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            Memory.clear();
         }
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
@@ -114,12 +117,12 @@ namespace Assembler
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            Memory.direct = true;
+            Memory.directCache = true;
         }
 
         private void twoWayBtn_CheckedChanged(object sender, EventArgs e)
         {
-            Memory.direct = false;
+            Memory.directCache = false;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -138,7 +141,10 @@ namespace Assembler
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Memory.blockSize = (int)numericUpDown1.Value;
+            int value = (int)numericUpDown1.Value;
+            if (value < 1) value = 1;
+            numericUpDown1.Value = value;
+            Memory.blockSize = value;
         }
     }
 }

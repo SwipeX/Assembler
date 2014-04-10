@@ -16,3 +16,7 @@ C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Properties.Re
 C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
 C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.exe
 C:\Users\Ryan\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.pdb
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csprojResolveAssemblyReference.cache
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Form1.resources
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Properties.Resources.resources
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache

@@ -7,8 +7,8 @@ namespace Assembler
         public static int cacheSize=2;
         public static int blockSize=1;
         public static int A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC;
-        public static bool direct = true;
-        public static Cache myCash;
+        public static bool directCache = true;
+        public static Cache LocalCache;
         private static readonly string[] RegisterNames =
         {
             "A", "B", "ACC", "ZERO", "ONE", "PC", "MAR", "MDR", "TEMP",
@@ -17,12 +17,16 @@ namespace Assembler
 
         private static int[] Stack = new int[256];
 
+        public static void clear()
+        {
+            LocalCache = null;
+        }
         public static int getValueAt(int index)
         {
             //cachey stuffs
             if (index >= 0 && index < Stack.Length)
             {
-                return myCash.getValueAt(index);
+                return LocalCache.getValueAt(index);
             }
             throw new SegmentationException();
         }
@@ -31,7 +35,7 @@ namespace Assembler
         {
             if (index >= 0 && index < Stack.Length)
             {
-                myCash.setValueAt(index, value);
+                LocalCache.setValueAt(index, value);
             }
             else
             {
