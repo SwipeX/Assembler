@@ -1,8 +1,13 @@
 ﻿For test one we got the best results from having a cache size of 5 with a block size of 8 (99% hit).  
 Lower cache sizes drastically reduced the hit count, while higher cache sizes seemed to increase it.
+Smaller sized blocks will have a higher miss rate, so if you can bear the penalty of replacement
+(which we can), the higher block size was preferred.
 Having the block size at one and the cache size at two produced a 53% ratio of hit/miss, which was
 extremely suprising that it was so low.  Overall the block size did not have nearly as much impact in our tests
 as the cache size did.  Increasing the cache size to a large number often cause the ratio to be between 98-100%.
-Direct map generally performed better at lower cache sizes, but noticably was worse than two way associative.
-Two way associative saw much better performance at higher cache and block sizes in most of our tests.
+The issue with increasing the block size is that when you have a miss occur, more data is require to be copied into the 
+cache on the replacement.  Since the replacement was random, it makes it almost unknown as to the 
+consequences that will stem from the replacement. Direct map generally performed better at lower cache sizes,
+ but noticably was worse than two way associative at higher levels.
+Two way associative saw much better performance at higher cache and block sizes in our test.
 
