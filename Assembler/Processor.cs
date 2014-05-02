@@ -33,13 +33,14 @@ namespace Assembler
                         }
                         else
                         {
+                            int i = Memory.getValueAt(value);
                             Memory.ACC = Memory.getValueAt(value);
                         }
                         wait = 1;
                         break;
                     case Opcodes.STA:
                         return value;
-                        break;
+                        
                     case Opcodes.ADD:
                         if (immediate)
                         {
@@ -124,16 +125,21 @@ namespace Assembler
             {
                 throw e;
             }
-            throw new MissException();
+            throw new DidntException();
         }
         static int opcode = -1;
+        static int opcode2 = -1;
         static bool immediate = false;
+        static bool immediate2 = false;
         static int value = 0;
+        static int value2 = 0;
         static bool returnstuff = true;
         static int storeval = 0;
+        static int storeval2 = 0;
         static bool hasBranched;
         static byte isFinished = 0;
         static byte wait = 0;
+        static int acclast;
      public  static  int waitCount = 0;
         static bool returnstuffpart2=false;
         internal static void executeAll(int[] packedInstructions)
@@ -141,14 +147,19 @@ namespace Assembler
             instructions[1] = -1;
 
             
-            while (Memory.PC <= packedInstructions.Length)
+            while (Memory.PC <= packedInstructions.Length+5)
             {
                 if(hasBranched){
                       instructions = new int[2];
+                      instructions[0] = -1;
                       instructions[1] = -1;
                           opcode = -1;
+                          opcode2 = -1;
                           immediate = false;
+                          immediate2 = false;
+
                            value = 0;
+                           value2 = 0;
                            hasBranched = false;
                 }
                 //Fetch
@@ -178,14 +189,16 @@ namespace Assembler
                  System.Threading.Thread t3 = new System.Threading.Thread
                (delegate()
                {
-                   if (opcode != -1) { 
+                   if (opcode2 != -1) { 
                    try
                    {
-                       Console.WriteLine(opcode+":"+immediate+":"+value);
+                       Console.WriteLine(opcode2+":"+immediate2+":"+value2);
+                       
                        returnstuff = true;
-                       storeval = execute(opcode, immediate, value);
+                       storeval = execute(opcode2, immediate2, value2);
+                       
                    }
-                   catch (MissException e)
+                   catch (DidntException e)
                    {
                        returnstuff = false;
                    }
@@ -194,6 +207,8 @@ namespace Assembler
                        hasBranched = true;
 
                    }
+                   Console.WriteLine(Memory.getStackAt(10));
+                   Console.WriteLine(Memory.ACC);
                }
                    
                });
@@ -203,7 +218,7 @@ namespace Assembler
                {
                    if (returnstuffpart2)
                    {
-                       Memory.setValueAt(storeval, Memory.ACC);
+                       Memory.setValueAt(storeval2, acclast);
                    }
                });
                  if (wait == 0) { 
@@ -221,15 +236,23 @@ namespace Assembler
                     //go get coffee
                 }
                 returnstuffpart2 = returnstuff;
-                if (Memory.PC <= packedInstructions.Length) { 
+                value2 = value;
+                immediate2 = immediate;
+                opcode2 = opcode;
+                storeval2 = storeval;
+                acclast = Memory.ACC;
+                
+                //if (Memory.PC <= packedInstructions.Length) { 
                     Memory.PC++;
-                 }
-                instructions[1] = instructions[0];
+                // }
+                
+                    instructions[1] = instructions[0];
+                 
                 if (isFinished != 0)
                 {
                     isFinished++;
                 }
-                 }
+                }
                  else
                  {
                      try
@@ -237,12 +260,16 @@ namespace Assembler
                          execute(Opcodes.NOP, false, 0); //NOP
                          
                      }
-                     catch (MissException e)
+                     catch (DidntException e)
                      {
                         
                      }
                      wait--;
                      waitCount++;
+                     if (wait == 0)
+                     {
+                         //instructions[1] = instructions[0];
+                     }
 
                  }
             }
