@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Assembler
 {
@@ -42,14 +43,11 @@ namespace Assembler
                     }
                 }
                 hits++;
-                Form1.toolStripStatusLabel1.Text = "Last cache request: Hit";
-                Form1.updateUI();
                 return g;
             }
             catch (MissException e)
             {
-                Form1.toolStripStatusLabel1.Text = "Last cache request: Miss";
-                Form1.updateUI();
+             
                 misses++;
                 replaceBlock(index);
                 return Memory.getStackAt(index);
@@ -77,13 +75,11 @@ namespace Assembler
                     }
                 }
                 hits++;
-                Form1.toolStripStatusLabel1.Text = "Last cache request: Hit";
-                Form1.updateUI();
+
             }
             catch (MissException)
             {
-                Form1.toolStripStatusLabel1.Text = "Last cache request: Miss";
-                Form1.updateUI();
+                
                 misses++;
                 Memory.setStackAt(index, value);
                 replaceBlock(index);

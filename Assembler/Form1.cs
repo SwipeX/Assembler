@@ -66,19 +66,27 @@ namespace Assembler
                 lastLoadedFile = name;
             }
         }
-
         private void stepToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             if (stepInstructions == null)
             {
                 Memory.LocalCache = new Cache(Memory.cacheSize, Memory.blockSize);
                 stepInstructions = CodeReader.readBinary(lastLoadedFile);
+                int[] tempstep = new int[1];
+                tempstep[0] = stepInstructions[Memory.PC];
+                Processor.executeAll(tempstep);
+                toolStripStatusLabel1.Text = "Wait cycles: " + Processor.waitCount;
+                updateUI();
             }
-            if (Memory.PC < stepInstructions.Length)
+            else if (Memory.PC < stepInstructions.Length)
             {
+                int[] tempstep = new int[1];
+                tempstep[0] = stepInstructions[Memory.PC];
+                Processor.executeAll(tempstep);
                 toolStripStatusLabel1.Text = Opcodes.NAMES[stepInstructions[Memory.PC] >> 25];
-                Processor.execute(stepInstructions[Memory.PC]);
-                Memory.PC++;
+                //Processor.execute(stepInstructions[Memory.PC]);
+                //Memory.PC++;
                 updateUI();
             }
             else
@@ -97,7 +105,7 @@ namespace Assembler
             try
             {
                 Processor.executeAll(packedInstructions);
-                toolStripStatusLabel1.Text = "Done!";
+                toolStripStatusLabel1.Text = "Wait cycles: " + Processor.waitCount;
                 updateUI();
             }
             catch (Exception ep)
