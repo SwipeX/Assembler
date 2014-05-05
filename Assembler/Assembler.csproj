@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchException.cs" />
+    <Compile Include="Cache.cs" />
+    <Compile Include="CacheBlock.cs" />
+    <Compile Include="DidntException.cs" />
+    <Compile Include="MissException.cs" />
     <Compile Include="SegmentationException.cs" />
     <Compile Include="CodeReader.cs" />
     <Compile Include="CodeWriter.cs" />
@@ -85,6 +90,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Cache_Analysis.txt" />
+    <Content Include="PROJ2_2_WAY.png" />
+    <Content Include="PROJ2_DMAP.png" />
+    <Content Include="project2_test1.s" />
+    <Content Include="project2_test2.s" />
+    <Content Include="test1.s" />
+    <Content Include="translate.s" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

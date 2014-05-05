@@ -47,7 +47,6 @@ namespace Assembler
             }
             catch (MissException e)
             {
-             
                 misses++;
                 replaceBlock(index);
                 return Memory.getStackAt(index);

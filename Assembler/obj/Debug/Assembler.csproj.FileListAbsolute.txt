@@ -21,3 +21,7 @@ C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Form1.resource
 C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.Properties.Resources.resources
 C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.csproj.GenerateResource.Cache
 C:\Users\Tim\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.exe.config
+C:\Users\Tim\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.exe
+C:\Users\Tim\Source\Repos\Assembler\Assembler\bin\Debug\Assembler.pdb
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.exe
+C:\Users\Tim\Source\Repos\Assembler\Assembler\obj\Debug\Assembler.pdb
