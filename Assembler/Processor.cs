@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -23,7 +23,7 @@ namespace Assembler
         private static int acclast;
         public static int waitCount = 0;
         private static bool returnValB;
-        private static readonly Dictionary<int, bool> pastBranches = new Dictionary<int, bool>();
+        private static readonly Dictionary<int, int> pastBranches = new Dictionary<int, int>();
         private static int predictedJump = -1; //-1 for none, else the line #
 
         public static int execute(int opcode, bool immediate, int value)
@@ -39,7 +39,7 @@ namespace Assembler
                         }
                         else
                         {
-                            int i = Memory.getValueAt(value);
+                           // int i = Memory.getValueAt(value);
                             Memory.ACC = Memory.getValueAt(value);
                         }
                         wait = 1;
@@ -96,35 +96,63 @@ namespace Assembler
                     case Opcodes.BA:
                         Memory.PC = value - 1;
                         wait = 1;
-                        pastBranches.Add(value, true);
+                        if (predictedJump - 1 != Memory.PC)
+                        {
+                            wait = 3;
+                            hasBranched = true;
+                        }
+                        predictLoad = 0;
+                        predictedJump = -1;
+                        add(value, 1);
                         throw new BranchException();
-                        //TODO see if branch prediction was successful and handle it
                     case Opcodes.BE:
                         if (Memory.CC == 0)
                         {
                             Memory.PC = value - 1;
                             wait = 1;
+                            if (predictedJump - 1 != Memory.PC)
+                            {
+                                wait = 3;
+                                hasBranched = true;
+                            }
                             throw new BranchException();
                         }
-                        pastBranches.Add(value, Memory.CC == 0);
+                         predictedJump = -1;
+                            predictLoad = 0;
+                        add(value, (Memory.CC == 0 ? 1 : 0));
                         break;
                     case Opcodes.BL:
                         if (Memory.CC < 0)
                         {
                             Memory.PC = value - 1;
                             wait = 1;
+                            if (predictedJump - 1 != Memory.PC)
+                            {
+                                wait = 3;
+                                hasBranched = true;
+                            }
                             throw new BranchException();
                         }
-                        pastBranches.Add(value, Memory.CC < 0);
+                         predictedJump = -1;
+                            predictLoad = 0;
+                        add(value, (Memory.CC < 0 ? 1 : 0));
                         break;
                     case Opcodes.BG:
                         if (Memory.CC > 0)
                         {
                             Memory.PC = value - 1;
                             wait = 1;
+                            if (predictedJump - 1 != Memory.PC)
+                            {
+                                wait = 3;
+                                predictedJump = -1;
+                                hasBranched = true;
+                            }
                             throw new BranchException();
                         }
-                        pastBranches.Add(value, Memory.CC > 0);
+                         predictedJump = -1;
+                            predictLoad = 0;
+                        add(value, (Memory.CC > 0 ? 1 : 0));
                         break;
                     case Opcodes.NOP:
                         ALU.Add(0);
@@ -140,6 +168,31 @@ namespace Assembler
             throw new DidntException();
         }
 
+        public static void put(int key, int val)
+        {
+            if (pastBranches.ContainsKey(key))
+                pastBranches[key] = val;
+            else
+            {
+                pastBranches.Add(key, val);
+            }
+        }
+
+        public static void add(int key, int amount)
+        {
+            put(get(key), amount);
+        }
+
+        public static int get(int key)
+        {
+            if (pastBranches.ContainsKey(key))
+                return pastBranches[key];
+            pastBranches.Add(key, 0);
+            return get(key);
+        }
+
+        private static byte predictLoad = 0;
+        public static int THRESHOLD = 1;
         /**
          * Pipelined function for executing an array of raw instructions
          */
@@ -169,7 +222,17 @@ namespace Assembler
                     (delegate()
                     {
                         if (Memory.PC < packedInstructions.Length)
-                            instructions[0] = packedInstructions[Memory.PC];
+                        {
+                            if (predictedJump <= 0)
+                            {
+                                instructions[0] = packedInstructions[Memory.PC];
+                            }
+                            else
+                            {
+                                instructions[0] = packedInstructions[predictedJump + predictLoad];
+                                predictLoad++;
+                            }
+                        }
                         else
                             finishSetting = 2;
                     });
@@ -188,17 +251,18 @@ namespace Assembler
                             /**
                              * Branch Prediction
                              */
-                            int pastJump = !pastBranches.ContainsKey(value) ? -2 : (pastBranches[value] ? value : -1);
+                            int pastJump = !pastBranches.ContainsKey(value) ? -2 : (pastBranches[value] > 1 ? value : 1);
                             //pastJump = -2 if branch has never been used, we can ignore that.
-                            //pastJump = -1 if branch was not taken previously
-                            //else branch exists and was taken before
-                            if (pastJump == -1)
+                            //pastJump = how many times branch has been taken                            
+                            if (pastJump <= 0)
                             {
-                                predictedJump = Memory.PC+1;
+                              //this is essentially the same as doing nothing,
+                              //so it is slightly more efficient to not even set it.
+                              //predictedJump = Memory.PC;
                             }
-                            else if (pastJump > -1)
+                            else if (pastJump > THRESHOLD)
                             {
-                               predictedJump = value - 1;
+                                predictedJump = value;
                             }
                         }
                     });
@@ -261,11 +325,11 @@ namespace Assembler
                     storeValB = storeValA;
                     acclast = Memory.ACC;
                     Memory.PC++;
-                    if (predictedJump > -1)
-                    {
-                        Memory.PC = predictedJump;
-                        predictedJump = -1;
-                    }
+//                    if (predictedJump > -1)
+//                    {
+//                        Memory.PC = predictedJump;
+//                        predictedJump = -1;
+//                    }
                     instructions[1] = instructions[0];
                     if (finishSetting != 0)
                     {
