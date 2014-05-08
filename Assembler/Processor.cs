@@ -149,7 +149,7 @@ namespace Assembler
             instructions[1] = -1;
 
 
-            while (Memory.PC <= packedInstructions.Length + 5)
+            while (Memory.PC <= packedInstructions.Length + 6)
             {
                 if (hasBranched)
                 {
@@ -223,8 +223,10 @@ namespace Assembler
                             catch (BranchException e)
                             {
                                 hasBranched = true;
+                                shouldReturn = false;
                             }
                             Console.WriteLine(Memory.getStackAt(10));
+                            //Console.WriteLine(Memory.getValueAt(10));
                             Console.WriteLine(Memory.ACC);
                         }
                     });
