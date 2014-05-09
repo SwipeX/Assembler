@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Assembler
@@ -29,6 +30,11 @@ namespace Assembler
             if (Memory.LocalCache != null && Memory.LocalCache.hits + Memory.LocalCache.misses > 0)
             hitLabel.Text = "Hits: " + Memory.LocalCache.hits + " Misses: " + Memory.LocalCache.misses
                 + " Hit Percentage:"+(Memory.LocalCache.hits*100 / (Memory.LocalCache.hits+Memory.LocalCache.misses)) + " %";
+            if (registerTable == null)
+            {
+                registerTable = new DataGridView();
+                statusStrip1 = new StatusStrip();
+            }
             registerTable.DataSource = Memory.getValues();
             registerTable.Invalidate();
             statusStrip1.Refresh();
@@ -121,6 +127,10 @@ namespace Assembler
         {
             Memory.reset();
             updateUI();
+        }
+        private void toggle_Click(object sender, EventArgs e)
+        {
+            Processor.THRESHOLD = Processor.THRESHOLD == 1 ? 2 : 1;
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
