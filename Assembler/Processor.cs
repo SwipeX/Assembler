@@ -24,6 +24,8 @@ namespace Assembler
         private static bool returnValB;
         private static readonly Dictionary<int, int> pastBranches = new Dictionary<int, int>();
         private static int predictedJump = -1; //-1 for none, else the line #
+        private static byte predictLoad;
+        public static int THRESHOLD = 1;
 
         public static int execute(int opcode, bool immediate, int value)
         {
@@ -38,7 +40,7 @@ namespace Assembler
                         }
                         else
                         {
-                           // int i = Memory.getValueAt(value);
+                            // int i = Memory.getValueAt(value);
                             Memory.ACC = Memory.getValueAt(value);
                         }
                         wait = 1;
@@ -95,7 +97,7 @@ namespace Assembler
                     case Opcodes.BA:
                         Memory.PC = value - 1;
                         wait = 1;
-                        if (predictedJump - 1 != Memory.PC)
+                        if (predictedJump > -1 && predictedJump - 1 != Memory.PC)
                         {
                             wait = 3;
                             hasBranched = true;
@@ -109,15 +111,15 @@ namespace Assembler
                         {
                             Memory.PC = value - 1;
                             wait = 1;
-                            if (predictedJump - 1 != Memory.PC)
+                            if (predictedJump > -1 && predictedJump - 1 != Memory.PC)
                             {
                                 wait = 3;
                                 hasBranched = true;
                             }
                             throw new BranchException();
                         }
-                         predictedJump = -1;
-                            predictLoad = 0;
+                        predictedJump = -1;
+                        predictLoad = 0;
                         add(value, (Memory.CC == 0 ? 1 : 0));
                         break;
                     case Opcodes.BL:
@@ -125,15 +127,15 @@ namespace Assembler
                         {
                             Memory.PC = value - 1;
                             wait = 1;
-                            if (predictedJump - 1 != Memory.PC)
+                            if (predictedJump > -1 && predictedJump - 1 != Memory.PC)
                             {
                                 wait = 3;
                                 hasBranched = true;
                             }
                             throw new BranchException();
                         }
-                         predictedJump = -1;
-                            predictLoad = 0;
+                        predictedJump = -1;
+                        predictLoad = 0;
                         add(value, (Memory.CC < 0 ? 1 : 0));
                         break;
                     case Opcodes.BG:
@@ -141,7 +143,7 @@ namespace Assembler
                         {
                             Memory.PC = value - 1;
                             wait = 1;
-                            if (predictedJump - 1 != Memory.PC)
+                            if (predictedJump > -1 && predictedJump - 1 != Memory.PC)
                             {
                                 wait = 3;
                                 predictedJump = -1;
@@ -149,8 +151,8 @@ namespace Assembler
                             }
                             throw new BranchException();
                         }
-                         predictedJump = -1;
-                            predictLoad = 0;
+                        predictedJump = -1;
+                        predictLoad = 0;
                         add(value, (Memory.CC > 0 ? 1 : 0));
                         break;
                     case Opcodes.NOP:
@@ -190,8 +192,6 @@ namespace Assembler
             return get(key);
         }
 
-        private static byte predictLoad = 0;
-        public static int THRESHOLD = 1;
         /**
          * Pipelined function for executing an array of raw instructions
          */
@@ -255,9 +255,9 @@ namespace Assembler
                             //pastJump = how many times branch has been taken                            
                             if (pastJump <= 0)
                             {
-                              //this is essentially the same as doing nothing,
-                              //so it is slightly more efficient to not even set it.
-                              //predictedJump = Memory.PC;
+                                //this is essentially the same as doing nothing,
+                                //so it is slightly more efficient to not even set it.
+                                //predictedJump = Memory.PC;
                             }
                             else if (pastJump > THRESHOLD)
                             {
@@ -324,11 +324,6 @@ namespace Assembler
                     storeValB = storeValA;
                     Memory.ACC2 = Memory.ACC; //handle data hazard
                     Memory.PC++;
-//                    if (predictedJump > -1)
-//                    {
-//                        Memory.PC = predictedJump;
-//                        predictedJump = -1;
-//                    }
                     instructions[1] = instructions[0];
                     if (finishSetting != 0)
                     {
