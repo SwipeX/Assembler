@@ -20,7 +20,6 @@ namespace Assembler
         private static bool hasBranched;
         private static byte finishSetting;
         private static byte wait;
-        private static int acclast;
         public static int waitCount = 0;
         private static bool returnValB;
         private static readonly Dictionary<int, bool> pastBranches = new Dictionary<int, bool>();
@@ -149,7 +148,7 @@ namespace Assembler
             instructions[1] = -1;
 
 
-            while (Memory.PC <= packedInstructions.Length + 6)
+            while (Memory.PC <= packedInstructions.Length + 4)
             {
                 if (hasBranched)
                 {
@@ -236,7 +235,7 @@ namespace Assembler
                     {
                         if (returnValB)
                         {
-                            Memory.setValueAt(storeValB, acclast);
+                            Memory.setValueAt(storeValB, Memory.ACC2); //handle data hazard
                         }
                     });
                 if (wait == 0)
@@ -259,7 +258,7 @@ namespace Assembler
                     immediate2 = immediate;
                     opcode2 = opcode;
                     storeValB = storeValA;
-                    acclast = Memory.ACC;
+                    Memory.ACC2 = Memory.ACC; //handle data hazard
                     Memory.PC++;
                     if (predictedJump > -1)
                     {
@@ -287,6 +286,12 @@ namespace Assembler
                     {
                         //instructions[1] = instructions[0];
                     }
+                }
+
+                if (Memory.PC == packedInstructions.Length + 4)
+                {
+                    Memory.PC = packedInstructions.Length;
+                    break;
                 }
             }
         }

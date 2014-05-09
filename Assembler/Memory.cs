@@ -6,13 +6,13 @@ namespace Assembler
     {
         public static int cacheSize=2;
         public static int blockSize=1;
-        public static int A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC;
+        public static int A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC, ACC2;
         public static bool directCache = true;
         public static Cache LocalCache;
         private static readonly string[] RegisterNames =
         {
             "A", "B", "ACC", "ZERO", "ONE", "PC", "MAR", "MDR", "TEMP",
-            "IR", "CC"
+            "IR", "CC", "ACC2"
         };
 
         private static int[] Stack = new int[256];
@@ -70,7 +70,7 @@ namespace Assembler
         {
             int[] RegisterValues =
             {
-                A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC
+                A, B, ACC, ZERO, ONE, PC, MAR, MDR, TEMP, IR, CC, ACC2
             };
             var table = new DataTable();
             table.Columns.Add("Register");
@@ -89,6 +89,7 @@ namespace Assembler
             ACC = 0;
             ZERO = 0;
             ONE = 0;
+            ACC2 = 0;
             PC = 0;
             MAR = 0;
             MDR = 0;
