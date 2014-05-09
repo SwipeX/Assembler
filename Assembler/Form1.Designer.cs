@@ -1,4 +1,4 @@
-﻿namespace Assembler
+namespace Assembler
 {
     partial class Form1
     {
@@ -33,6 +33,7 @@
             this.stepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggle = new System.Windows.Forms.ToolStripMenuItem();
             Form1.registerTable = new System.Windows.Forms.DataGridView();
             Form1.statusStrip1 = new System.Windows.Forms.StatusStrip();
             Form1.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,7 +60,8 @@
             this.fileToolStripMenuItem,
             this.stepToolStripMenuItem,
             this.runToolStripMenuItem,
-            this.resetToolStripMenuItem});
+            this.resetToolStripMenuItem,
+            this.toggle});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(489, 24);
@@ -93,6 +95,13 @@
             this.resetToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.resetToolStripMenuItem.Text = "Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            //
+            //
+            //
+            this.toggle.Name = "toggleJumpPre";
+            this.toggle.Size = new System.Drawing.Size(54, 20);
+            this.toggle.Text = "Toggle Branch Prediction";
+            this.toggle.Click += new System.EventHandler(this.toggle_Click);
             // 
             // registerTable
             // 
@@ -264,6 +273,7 @@
         private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggle;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton twoWayBtn;
@@ -272,7 +282,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
-        public static  System.Windows.Forms.Label hitLabel;
+        public static System.Windows.Forms.Label hitLabel;
         public static System.Windows.Forms.DataGridView registerTable;
         public static System.Windows.Forms.StatusStrip statusStrip1;
         public static System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
