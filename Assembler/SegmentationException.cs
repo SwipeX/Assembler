@@ -13,7 +13,7 @@ public class SegmentationException : Exception
     public SegmentationException(string message, Exception inner)
         : base(message, inner)
     {
-    }
+    } 
 
 }
 
